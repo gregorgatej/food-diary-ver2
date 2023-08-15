@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+
+</head>
+<body>
+
+
+<header>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Food Diary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Diary</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Food</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Analysis</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+</header>
+
+<main>
+  <div class="container">
+    <div class="row">
+    <form>
+      <div class="mb-3">
+        <label for="nameOfFood" class="form-label">Name</label>
+        <input type="text" class="form-control" id="nameOfFood" aria-describedby="nameOfFoodHelp">
+        <div id="nameOfFoodHelp" class="form-text">Input the name of the food you have eaten.</div>
+      </div>
+      <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" aria-describedby="quantityOfFoodHelp">
+        <div id="quantityOfFoodHelp" class="form-text">Input the quantity of the food you have eaten.</div>
+      </div>
+      <div class="mb-3">
+        <label for="dateTime" class="form-label">Date and Time</label>
+        <input type="datetime-local" class="form-control" id="dateTime" aria-describedby="dateTimeHelp">
+        <div id="dateTimeHelp" class="form-text">At what time have you eaten the food?</div>
+      </div>
+      <div class="row mt-4 mb-4">
+        <h4 class="text-left font-weight-normal">Listing of Macronutrient Content</h4>
+      </div>
+      <div class="mb-3">
+        <label for="carbs" class="form-label">Carbs</label>
+        <input type="number" class="form-control" id="carbs" aria-describedby="carbsHelp">
+        <div id="carbsHelp" class="form-text">Input the carbs specified on the label of the food you have eaten.</div>
+      </div>
+      <div class="mb-3">
+        <label for="protein" class="form-label">Protein</label>
+        <input type="number" class="form-control" id="protein" aria-describedby="proteinHelp">
+        <div id="proteinHelp" class="form-text">Input the proteins specified on the label of the food you have eaten.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+    </form>
+  </div>
+
+
+
+        
+
+</main>
+
+        
+
+
+
+    
+    <script src="js/bootstrap.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get references to form fields
+        const nameInput = document.getElementById("nameOfFood");
+        const quantityInput = document.getElementById("quantity");
+        const dateTimeInput = document.getElementById("dateTime");
+        const carbsInput = document.getElementById("carbs");
+        const proteinInput = document.getElementById("protein");
+    
+        // Get reference to the Submit button
+        const submitBtn = document.getElementById("submitBtn");
+    
+        // Open or create the IndexedDB database
+        const request = window.indexedDB.open("FoodDiaryDB", 1);
+    
+        let db;
+    
+        request.onsuccess = function (event) {
+          db = event.target.result;
+        };
+    
+        request.onerror = function (event) {
+          console.error("Database error:", event.target.error);
+        };
+    
+        request.onupgradeneeded = function (event) {
+          db = event.target.result;
+    
+          // Create an object store for storing food entries
+          const foodEntryStore = db.createObjectStore("foodEntries", { keyPath: "id", autoIncrement: true });
+    
+          // Define the structure of the object store
+          foodEntryStore.createIndex("name", "name", { unique: false });
+          foodEntryStore.createIndex("quantity", "quantity", { unique: false });
+          foodEntryStore.createIndex("dateTime", "dateTime", { unique: false });
+          foodEntryStore.createIndex("carbs", "carbs", { unique: false });
+          foodEntryStore.createIndex("protein", "protein", { unique: false });
+        };
+    
+        submitBtn.addEventListener("click", function (event) {
+          event.preventDefault();
+    
+          // Collect form data
+          const entry = {
+            name: nameInput.value,
+            quantity: parseFloat(quantityInput.value),
+            dateTime: new Date(dateTimeInput.value).getTime(),
+            carbs: parseFloat(carbsInput.value),
+            protein: parseFloat(proteinInput.value),
+          };
+    
+          // Add data to the object store
+          const transaction = db.transaction("foodEntries", "readwrite");
+          const foodEntryStore = transaction.objectStore("foodEntries");
+          const addRequest = foodEntryStore.add(entry);
+    
+          addRequest.onsuccess = function () {
+            console.log("Data added successfully");
+            // Clear form fields after successful submission
+            nameInput.value = "";
+            quantityInput.value = "";
+            dateTimeInput.value = "";
+            carbsInput.value = "";
+            proteinInput.value = "";
+          };
+    
+          addRequest.onerror = function (event) {
+            console.error("Error adding data:", event.target.error);
+          };
+        });
+      });
+    </script>
+
+</body>
+</html>
