@@ -1,0 +1,21 @@
+{
+    "name": "Food Diary", // installation name
+    "short_name": "FD", // app title name
+    "start_url": ".",
+    "theme_color": "#4287f5",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "icons":[
+      {
+        "src":"logo192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src":"logo512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  
+  }
