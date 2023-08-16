@@ -23,7 +23,10 @@
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Diary</a>
+            <a class="nav-link active" aria-current="page" href="diary-view.html">Diary</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="diary-add.html">Add to Diary</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="#">Food</a>
@@ -90,6 +93,10 @@
     <script src="js/bootstrap.js"></script>
 
     <script>
+
+
+
+
       document.addEventListener("DOMContentLoaded", function () {
         // Get references to form fields
         const nameInput = document.getElementById("nameOfFood");
@@ -158,6 +165,8 @@
           addRequest.onerror = function (event) {
             console.error("Error adding data:", event.target.error);
           };
+
+
         });
       });
     </script>
