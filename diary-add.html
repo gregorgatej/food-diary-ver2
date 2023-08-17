@@ -5,42 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/bootstrap.css">
-
-
 </head>
 <body>
 
-
-<header>
-
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">Food Diary</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="diary-view.html">Diary</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="diary-add.html">Add to Diary</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Food</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Analysis</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
-
-</header>
+<div id="header-placeholder"></div>
 
 <main>
   <div class="container">
@@ -74,29 +42,15 @@
         <input type="number" class="form-control" id="protein" aria-describedby="proteinHelp">
         <div id="proteinHelp" class="form-text">Input the proteins specified on the label of the food you have eaten.</div>
       </div>
-
       <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
     </form>
   </div>
-
-
-
-        
-
 </main>
-
-        
-
-
-
-    
-    <script src="js/bootstrap.js"></script>
-
-    <script>
-
-
-
-
+   
+<script src="js/bootstrap.js"></script>
+<script src="index.js"></script>
+<script src="fetch-header.js"></script>
+<script>
       document.addEventListener("DOMContentLoaded", function () {
         // Get references to form fields
         const nameInput = document.getElementById("nameOfFood");
@@ -165,11 +119,8 @@
           addRequest.onerror = function (event) {
             console.error("Error adding data:", event.target.error);
           };
-
-
         });
       });
-    </script>
-
+</script>
 </body>
 </html>
